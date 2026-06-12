@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="content-grid symbol-layout">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Symbol</p>
+                <h3>股票信息维护</h3>
+                <p class="section-copy">维护常用股票代码、名称和市场，其他页面录入股票代码时会优先从这里搜索选择。</p>
+            </div>
+        </div>
+        <form id="symbolForm" class="form-grid">
+            <input id="symbolId" type="hidden">
+            <label class="field">
+                <span>股票代码</span>
+                <input id="symbolCode" type="text" placeholder="如 600519.SH">
+            </label>
+            <label class="field">
+                <span>股票名称</span>
+                <input id="symbolName" type="text" placeholder="如 贵州茅台">
+            </label>
+            <label class="field">
+                <span>市场</span>
+                <input id="symbolMarket" type="text" value="A股">
+            </label>
+            <div class="button-row">
+                <button id="symbolSubmit" class="primary-btn" type="submit">保存股票</button>
+            </div>
+        </form>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Search</p>
+                <h3>常用股票列表</h3>
+            </div>
+        </div>
+        <form id="symbolSearchForm" class="symbol-search-row">
+            <input id="symbolKeyword" type="text" placeholder="输入代码、名称或市场搜索">
+            <button id="symbolSearch" class="secondary-btn" type="submit">搜索</button>
+        </form>
+        <div id="symbolTable" class="table-wrap wide-table symbol-table-wrap"></div>
+    </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_ENDPOINTS = {
+        symbols: "{{ url_for('project_symbols_api.symbols_list') }}",
+        symbolBase: "/api/symbols/"
+    };
+</script>
+<script src="{{ url_for('static', filename='project_symbols.js') }}"></script>
+{% endblock %}

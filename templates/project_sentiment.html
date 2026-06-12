@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="content-grid two-column">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Input</p>
+                <h3>文本录入</h3>
+            </div>
+        </div>
+        <form id="sentimentForm" class="form-grid">
+            <label class="field">
+                <span>文本标题</span>
+                <input id="sentimentTitle" type="text" placeholder="输入新闻、政策或公告标题">
+            </label>
+            <label class="field">
+                <span>股票代码</span>
+                <input id="sentimentSymbol" type="text" placeholder="如 600519.SH">
+            </label>
+            <label class="field">
+                <span>来源类型</span>
+                <select id="sentimentSourceType">
+                    <option value="financial_news">财经新闻</option>
+                    <option value="policy_document">政策文件</option>
+                    <option value="company_announcement">公司公告</option>
+                </select>
+            </label>
+            <label class="field">
+                <span>发布时间</span>
+                <input id="sentimentPublishedAt" type="text" placeholder="YYYY-MM-DD HH:mm:ss" data-datetime-picker="datetime" autocomplete="off" readonly>
+            </label>
+            <label class="field field-full">
+                <span>正文内容</span>
+                <textarea id="sentimentContent" rows="10" placeholder="粘贴待分析文本"></textarea>
+            </label>
+            <div class="button-row">
+                <button id="sentimentSubmit" class="primary-btn" type="submit">开始分析</button>
+            </div>
+        </form>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Result</p>
+                <h3>分析结果</h3>
+            </div>
+        </div>
+        <div id="sentimentResult" class="result-panel empty-state">暂无分析结果</div>
+    </article>
+</section>
+
+<section class="card">
+    <div class="section-head">
+        <div>
+            <p class="label-text">History</p>
+            <h3>最近情感分析记录</h3>
+        </div>
+    </div>
+    <div id="sentimentHistory" class="table-wrap"></div>
+    <div id="sentimentPager" class="history-pager"></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_ENDPOINTS = {
+        analyze: "{{ url_for('project_sentiment_api.analyze_sentiment') }}",
+        history: "{{ url_for('project_sentiment_api.sentiment_history') }}",
+        detailBase: "/api/sentiment/"
+    };
+</script>
+<script src="{{ url_for('static', filename='project_sentiment.js') }}"></script>
+{% endblock %}

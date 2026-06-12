@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="content-grid two-column">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">DeepSeek</p>
+                <h3>DeepSeek 配置</h3>
+            </div>
+        </div>
+        <form id="deepseekForm" class="form-grid">
+            <label class="field">
+                <span>启用状态</span>
+                <select id="deepseekEnabled">
+                    <option value="false">未启用</option>
+                    <option value="true">启用</option>
+                </select>
+            </label>
+            <label class="field">
+                <span>Base URL</span>
+                <input id="deepseekBaseUrl" type="text" placeholder="https://api.deepseek.com">
+            </label>
+            <label class="field">
+                <span>API Key</span>
+                <input id="deepseekApiKey" type="password" placeholder="留空则保留原 API Key">
+            </label>
+            <label class="field">
+                <span>Model Name</span>
+                <input id="deepseekModelName" type="text" placeholder="deepseek-chat">
+            </label>
+            <label class="field">
+                <span>请求超时时间（秒）</span>
+                <input id="deepseekTimeout" type="number" min="1" step="1" placeholder="30">
+                <small class="field-help">用于 AI 对话、情感分析和决策建议生成。</small>
+            </label>
+            <label class="field">
+                <span>API Key 状态</span>
+                <input id="deepseekApiKeyStatus" type="text" readonly>
+            </label>
+            <label class="check-line field-full">
+                <input id="deepseekClearApiKey" type="checkbox">
+                <span>清空数据库中保存的 API Key</span>
+            </label>
+            <label class="field field-full">
+                <span>备注</span>
+                <textarea id="deepseekRemark" rows="4" placeholder="说明当前接入策略"></textarea>
+            </label>
+            <div class="button-row">
+                <button id="deepseekSubmit" class="primary-btn" type="submit">保存 DeepSeek 配置</button>
+            </div>
+        </form>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Market Source</p>
+                <h3>行情数据源配置</h3>
+            </div>
+        </div>
+        <form id="marketSourceForm" class="form-grid">
+            <label class="field">
+                <span>数据源</span>
+                <input id="marketSourceProvider" type="text" value="Tushare" readonly>
+                <small class="field-help">系统固定使用 Tushare，不支持切换其他行情源。</small>
+            </label>
+            <label class="field">
+                <span>Tushare Token</span>
+                <input id="marketSourceToken" type="password" placeholder="请输入 Tushare Token">
+            </label>
+            <label class="field">
+                <span>Token 状态</span>
+                <input id="marketSourceTokenStatus" type="text" readonly>
+            </label>
+            <div class="button-row">
+                <button id="marketSourceSubmit" class="primary-btn" type="submit">保存 Tushare Token</button>
+            </div>
+        </form>
+    </article>
+</section>
+
+<section class="card">
+    <div class="section-head">
+        <div>
+            <p class="label-text">Runtime Status</p>
+            <h3>系统运行状态</h3>
+        </div>
+    </div>
+    <div id="settingsStatus" class="stack-list"></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_ENDPOINTS = {
+        settings: "{{ url_for('project_settings_api.get_settings') }}",
+        deepseek: "{{ url_for('project_settings_api.update_deepseek_settings') }}",
+        marketSource: "{{ url_for('project_settings_api.update_market_source_settings') }}",
+        status: "{{ url_for('project_settings_api.system_status') }}"
+    };
+</script>
+<script src="{{ url_for('static', filename='project_settings.js') }}"></script>
+{% endblock %}

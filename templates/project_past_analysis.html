@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="content-grid two-column">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Past Analysis</p>
+                <h3>过往涨跌归因</h3>
+                <p class="section-copy">输入股票和时间段后，系统会匹配行情、新闻与情感记录，并调用 DeepSeek 生成归因报告。</p>
+            </div>
+        </div>
+        <form id="pastAnalysisForm" class="form-grid">
+            <label class="field">
+                <span>股票代码</span>
+                <input id="analysisSymbol" type="text" value="600519.SH">
+            </label>
+            <label class="field">
+                <span>时间范围</span>
+                <select id="analysisRange">
+                    <option value="1m">近 1 月</option>
+                    <option value="3m" selected>近 3 月</option>
+                    <option value="6m">近 6 月</option>
+                    <option value="1y">近 1 年</option>
+                    <option value="custom">自定义</option>
+                </select>
+            </label>
+            <label class="field">
+                <span>开始日期</span>
+                <input id="analysisStartDate" type="text" placeholder="YYYY-MM-DD" data-datetime-picker="date" autocomplete="off" readonly>
+            </label>
+            <label class="field">
+                <span>结束日期</span>
+                <input id="analysisEndDate" type="text" placeholder="YYYY-MM-DD" data-datetime-picker="date" autocomplete="off" readonly>
+            </label>
+            <div class="button-row">
+                <button id="analysisSubmit" class="primary-btn" type="submit">生成归因分析</button>
+            </div>
+        </form>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Trend</p>
+                <h3>涨跌曲线</h3>
+            </div>
+        </div>
+        <div id="analysisSummary" class="metrics-mini-grid"></div>
+        <div id="analysisChart" class="chart-box empty-state">暂无图表数据</div>
+    </article>
+</section>
+
+<section class="content-grid two-column">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">News</p>
+                <h3>匹配新闻与情感</h3>
+            </div>
+        </div>
+        <div id="analysisNews" class="stack-list"></div>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">DeepSeek</p>
+                <h3>AI 归因报告</h3>
+            </div>
+        </div>
+        <div id="analysisReport" class="report-panel empty-state">暂无归因报告</div>
+    </article>
+</section>
+
+<div class="loading-overlay" id="pastAnalysisLoading" aria-hidden="true">
+    <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <p class="label-text">AI Analysis</p>
+        <h3>正在生成过往涨跌归因</h3>
+        <p id="pastAnalysisLoadingText">正在拉取行情数据...</p>
+        <div class="loading-progress" aria-hidden="true">
+            <span id="pastAnalysisLoadingBar"></span>
+        </div>
+        <p class="field-help">系统会筛选硬标签新闻、汇总情感记录并调用 DeepSeek 做逻辑裁判。</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_ENDPOINTS = {
+        analyze: "{{ url_for('project_past_analysis_api.past_analysis_analyze') }}"
+    };
+</script>
+<script src="{{ url_for('static', filename='project_past_analysis.js') }}"></script>
+{% endblock %}

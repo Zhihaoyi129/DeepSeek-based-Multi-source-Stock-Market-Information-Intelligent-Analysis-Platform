@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="content-grid task-layout">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Scheduler</p>
+                <h3>定时任务配置</h3>
+                <p class="section-copy">默认用于每日盘后生成新闻、写入新闻库并调用 DeepSeek 完成情感分析。</p>
+            </div>
+        </div>
+        <form id="taskForm" class="form-grid">
+            <input id="taskId" type="hidden">
+            <label class="field">
+                <span>任务名称</span>
+                <input id="taskName" type="text" value="每日盘后自动获取新闻">
+            </label>
+            <label class="field">
+                <span>启用状态</span>
+                <select id="taskEnabled">
+                    <option value="true">启用</option>
+                    <option value="false">停用</option>
+                </select>
+            </label>
+            <label class="field">
+                <span>执行时间</span>
+                <input id="taskRunTime" type="time" value="15:30">
+            </label>
+            <label class="field">
+                <span>任务内容预设</span>
+                <select id="taskPreset">
+                    <option value="post_market_news">盘后自动获取新闻</option>
+                </select>
+            </label>
+            <label class="field field-full">
+                <span>股票代码</span>
+                <textarea id="taskSymbols" rows="3" placeholder="600519.SH, 000001.SZ, 300750.SZ"></textarea>
+                <small class="field-help">多个股票用逗号或换行分隔。</small>
+            </label>
+            <div class="field field-full">
+                <span>快速添加股票</span>
+                <div class="symbol-picker-row">
+                    <input id="taskSymbolPicker" type="text" placeholder="搜索常用股票代码或名称">
+                    <button id="taskAddSymbol" class="secondary-btn" type="button">添加</button>
+                </div>
+            </div>
+            <label class="field field-full">
+                <span>备注</span>
+                <textarea id="taskRemark" rows="3" placeholder="说明任务用途"></textarea>
+            </label>
+            <div class="button-row">
+                <button id="taskSubmit" class="primary-btn" type="submit">保存任务</button>
+            </div>
+        </form>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Tasks</p>
+                <h3>任务列表</h3>
+            </div>
+        </div>
+        <div id="taskList" class="table-wrap wide-table task-table-wrap"></div>
+    </article>
+</section>
+
+<section class="card">
+    <div class="section-head">
+        <div>
+            <p class="label-text">Logs</p>
+            <h3>运行日志</h3>
+        </div>
+    </div>
+    <div id="taskLogs" class="table-wrap"></div>
+</section>
+
+<div class="loading-overlay" id="taskRunLoading" aria-hidden="true">
+    <div class="loading-card">
+        <div class="loading-spinner"></div>
+        <p class="label-text">Task Running</p>
+        <h3>正在执行盘后新闻任务</h3>
+        <p id="taskRunLoadingText">正在读取任务配置...</p>
+        <div class="loading-progress" aria-hidden="true">
+            <span id="taskRunLoadingBar"></span>
+        </div>
+        <p class="field-help">系统会调用 DeepSeek 生成新闻、入库并执行情感分析，请不要重复提交。</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_ENDPOINTS = {
+        tasks: "{{ url_for('project_tasks_api.tasks_list') }}",
+        taskBase: "/api/tasks/"
+    };
+</script>
+<script src="{{ url_for('static', filename='project_tasks.js') }}"></script>
+{% endblock %}
