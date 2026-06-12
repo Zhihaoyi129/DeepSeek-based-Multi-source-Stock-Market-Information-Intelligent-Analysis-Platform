@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }} - 基于 DeepSeek 的多源股市信息智能分析平台</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='project.css') }}">
+</head>
+<body class="project-body">
+    <div class="project-shell">
+        <aside class="sidebar">
+            <div class="brand-card">
+                <p class="brand-kicker">DeepSeek Stock Lab</p>
+                <h1>多源股市信息智能分析平台</h1>
+                <p class="brand-copy">Flask 单体原型，聚合文本情感、技术指标与规则化决策建议。</p>
+            </div>
+            <nav class="nav-list">
+                <a class="nav-link {% if page_key == 'dashboard' %}is-active{% endif %}" href="{{ url_for('project_pages.dashboard_page') }}">平台总览</a>
+                <a class="nav-link {% if page_key == 'sentiment' %}is-active{% endif %}" href="{{ url_for('project_pages.sentiment_page') }}">情感分析</a>
+                <a class="nav-link {% if page_key == 'market' %}is-active{% endif %}" href="{{ url_for('project_pages.market_page') }}">技术分析</a>
+                <a class="nav-link {% if page_key == 'decision' %}is-active{% endif %}" href="{{ url_for('project_pages.decision_page') }}">决策建议</a>
+                <a class="nav-link {% if page_key == 'history' %}is-active{% endif %}" href="{{ url_for('project_pages.history_page') }}">历史中心</a>
+                <a class="nav-link {% if page_key == 'settings' %}is-active{% endif %}" href="{{ url_for('project_pages.settings_page') }}">系统设置</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="page-header">
+                <div>
+                    <p class="eyebrow">PROJECT MODULE</p>
+                    <h2>{{ page_title }}</h2>
+                </div>
+                <div class="header-meta">
+                    <span class="meta-chip">DeepSeek 占位集成</span>
+                    <span class="meta-chip">SQLite 演示数据</span>
+                </div>
+            </header>
+
+            <div id="pageNotice" class="notice hidden"></div>
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='vendor/layui_shim.js') }}"></script>
+    <script src="{{ url_for('static', filename='project_common.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

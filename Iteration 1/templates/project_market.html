@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="content-grid two-column">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Query</p>
+                <h3>技术分析查询</h3>
+            </div>
+        </div>
+        <form id="marketForm" class="form-grid">
+            <label class="field">
+                <span>股票代码</span>
+                <input id="marketSymbol" type="text" value="600519.SH">
+            </label>
+            <label class="field">
+                <span>时间范围</span>
+                <select id="marketRange">
+                    <option value="1m">近 1 月</option>
+                    <option value="3m" selected>近 3 月</option>
+                    <option value="6m">近 6 月</option>
+                    <option value="1y">近 1 年</option>
+                    <option value="custom">自定义</option>
+                </select>
+            </label>
+            <label class="field">
+                <span>开始日期</span>
+                <input id="marketStartDate" type="date">
+            </label>
+            <label class="field">
+                <span>结束日期</span>
+                <input id="marketEndDate" type="date">
+            </label>
+            <label class="field">
+                <span>行情数据源</span>
+                <select id="marketSource">
+                    <option value="mock">Mock</option>
+                    <option value="akshare">AKShare</option>
+                    <option value="tushare">Tushare</option>
+                </select>
+            </label>
+            <label class="field field-full">
+                <span>技术指标</span>
+                <div class="check-row">
+                    <label><input type="checkbox" name="indicator" value="ma5" checked> MA5</label>
+                    <label><input type="checkbox" name="indicator" value="ma10" checked> MA10</label>
+                    <label><input type="checkbox" name="indicator" value="ma20" checked> MA20</label>
+                    <label><input type="checkbox" name="indicator" value="rsi" checked> RSI</label>
+                    <label><input type="checkbox" name="indicator" value="macd" checked> MACD</label>
+                    <label><input type="checkbox" name="indicator" value="volume" checked> 成交量</label>
+                </div>
+            </label>
+            <div class="button-row">
+                <button class="primary-btn" type="submit">查询行情</button>
+            </div>
+        </form>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Overview</p>
+                <h3>结果概览</h3>
+            </div>
+        </div>
+        <div id="marketSummary" class="metrics-mini-grid"></div>
+        <div id="marketChart" class="chart-box empty-state">暂无图表数据</div>
+    </article>
+</section>
+
+<section class="content-grid two-column">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Indicators</p>
+                <h3>指标详情</h3>
+            </div>
+        </div>
+        <div id="marketIndicators" class="table-wrap"></div>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">History</p>
+                <h3>最近技术分析记录</h3>
+            </div>
+        </div>
+        <div id="marketHistory" class="table-wrap"></div>
+    </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_ENDPOINTS = {
+        quote: "{{ url_for('project_market_api.market_quote') }}",
+        history: "{{ url_for('project_market_api.market_history') }}",
+        detailBase: "/api/market/"
+    };
+</script>
+<script src="{{ url_for('static', filename='project_market.js') }}"></script>
+{% endblock %}

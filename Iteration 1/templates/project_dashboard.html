@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card-grid metrics-grid">
+    <article class="card stat-card">
+        <p class="label-text">情感分析记录</p>
+        <div id="sentimentCount" class="stat-value">-</div>
+    </article>
+    <article class="card stat-card">
+        <p class="label-text">技术分析记录</p>
+        <div id="marketCount" class="stat-value">-</div>
+    </article>
+    <article class="card stat-card">
+        <p class="label-text">决策建议记录</p>
+        <div id="decisionCount" class="stat-value">-</div>
+    </article>
+    <article class="card stat-card">
+        <p class="label-text">跟踪股票数量</p>
+        <div id="symbolCount" class="stat-value">-</div>
+    </article>
+</section>
+
+<section class="content-grid two-column">
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">Recent Activity</p>
+                <h3>最近分析记录</h3>
+            </div>
+        </div>
+        <div id="recentRecords" class="stack-list"></div>
+    </article>
+
+    <article class="card">
+        <div class="section-head">
+            <div>
+                <p class="label-text">System Status</p>
+                <h3>系统状态</h3>
+            </div>
+        </div>
+        <div id="systemStatus" class="stack-list"></div>
+    </article>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_ENDPOINTS = {
+        dashboardState: "{{ url_for('project_dashboard_api.dashboard_state') }}"
+    };
+</script>
+<script src="{{ url_for('static', filename='project_dashboard.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="card">
+    <div class="section-head">
+        <div>
+            <p class="label-text">Filters</p>
+            <h3>任务筛选</h3>
+        </div>
+    </div>
+    <form id="historyForm" class="form-grid compact-grid">
+        <label class="field">
+            <span>模块类型</span>
+            <select id="historyModule">
+                <option value="">全部</option>
+                <option value="sentiment">情感分析</option>
+                <option value="market">技术分析</option>
+                <option value="decision">决策建议</option>
+            </select>
+        </label>
+        <label class="field">
+            <span>股票代码</span>
+            <input id="historySymbol" type="text" placeholder="如 300750.SZ">
+        </label>
+        <label class="field">
+            <span>状态</span>
+            <select id="historyStatus">
+                <option value="">全部</option>
+                <option value="completed">completed</option>
+            </select>
+        </label>
+        <label class="field">
+            <span>开始日期</span>
+            <input id="historyStartDate" type="date">
+        </label>
+        <label class="field">
+            <span>结束日期</span>
+            <input id="historyEndDate" type="date">
+        </label>
+        <div class="button-row">
+            <button class="primary-btn" type="submit">筛选记录</button>
+        </div>
+    </form>
+</section>
+
+<section class="card">
+    <div class="section-head">
+        <div>
+            <p class="label-text">Center</p>
+            <h3>分析任务历史中心</h3>
+        </div>
+    </div>
+    <div id="historyTable" class="table-wrap"></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    window.PAGE_ENDPOINTS = {
+        list: "{{ url_for('project_history_api.history_list') }}",
+        detail: "{{ url_for('project_history_api.history_detail') }}"
+    };
+</script>
+<script src="{{ url_for('static', filename='project_history.js') }}"></script>
+{% endblock %}
