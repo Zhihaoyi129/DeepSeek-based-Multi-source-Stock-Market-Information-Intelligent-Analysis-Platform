@@ -1,68 +1,48 @@
-#基于DeepSeek的多源股市信息智能分析平台
+# Multi-source Stock Market Information Intelligent Analysis Platform Based on DeepSeek 
+## Development Tools: 
+- Pycharm (Code Writing) 
+## Development Languages and: 
+- Python (implemented web pages using Flask) 
+## List of Components: 
+- No hardware
+## Original Requirements 
 
-## 开发工具：
+Based on DeepSeek's multi-source stock market information intelligent analysis platform
+Title and division suggestions (each person is responsible for one module)
+1. : Based on DeepSeek's multi-source stock market information intelligent analysis platform - News and Policy Text Sentiment Analysis Module
+Task: Use DeepSeek to conduct text understanding and sentiment analysis of financial news, policy documents, and company announcements
+Technology stack: DeepSeek API, text preprocessing, sentiment classification model (can be fine-tuned with pre-trained models)
+2. : Based on DeepSeek's multi-source stock market information intelligent analysis platform - Technical Indicators and Trading Data Visualization Module
+Task: Responsible for obtaining stock trading data, calculating technical indicators (MA, RSI, etc.), and generating visual charts
+Technology stack: Python (pandas, matplotlib/yfinance), data interfaces (such as AKShare, Tushare)
+3. : Based on DeepSeek's multi-source stock market information intelligent analysis platform - Multi-source Data Fusion and Decision Recommendation Generation Module
+Task: Merge the analysis results of news with technical indicator data, and use DeepSeek to generate comprehensive trading recommendations
+Technology stack: LangChain (optional), Prompt Engineering, Decision Logic Design
+4. : Based on DeepSeek's multi-source stock market information intelligent analysis platform - System Integration and Web Interface Development
+Task: Build front-end and back-end systems, integrate the functions of each module, and provide a user interaction interface
+Technology stack: Flask/Django + Vue/React, system deployment and testing 
 
-- Pycharm（代码编写）
+## Overall Function/Requirement: 
+System Integration and Web Interface Development 
+The overall web pages of the system are implemented using Flask, while the DeepSeek part interacts through interface calls. 2.
 
-## 开发语言和：
+News and Policy Text Sentiment Analysis Module (Page 1) 
+By using the conversation method, the text-based news and policy information is pasted into the chat. The system calls DeepSeek through the interface and then returns the results. 
+Technical Indicators and Trading Data Visualization Module (Page 2) 
+By specifying the transaction data to be retrieved in the dialog box, the system calls the visualization module to perform data visualization. The data is obtained through akshare or tushare. 
+Multi-source Data Fusion and Decision Recommendation Generation Module (Page 3) 
+If:
+Emotion = Positive
+And RSI < 70
+And Price > MA5
+→ Recommendation: Buy 
+If:
+Emotion = Negative
+Or RSI > 70
+→ Recommendation: Sell 
+Otherwise:
+→ Wait and see 
 
-- Python（使用flask实现web页面）
-
-## 元件列表：
-
-- 无硬件
-## 原始需求
-
-
-基于 DeepSeek 的多源股市信息智能分析平台
-小标题与分工建议（每人负责一个模块）
-1. ：基于 DeepSeek 的多源股市信息智能分析平台 —— 新闻与政策文本情感分析模块
-任务：使用 DeepSeek 对财经新闻、政策文件、公司公告进行文本理解与情感分析
-技术栈：DeepSeek API、文本预处理、情感分类模型（可结合预训练模型微调）
-2. ：基于 DeepSeek 的多源股市信息智能分析平台 —— 技术指标与交易数据可视化模块
-任务：负责股票交易数据的获取、技术指标计算（MA、RSI 等）、可视化图表生成
-技术栈：Python (pandas, matplotlib/yfinance)、数据接口（如 AKShare、Tushare）
-3. ：基于 DeepSeek 的多源股市信息智能分析平台 —— 多源数据融合与决策建议生成模块
-任务：将新闻分析结果与技术指标数据融合，利用 DeepSeek 生成综合交易建议
-技术栈：LangChain（可选）、Prompt 工程、决策逻辑设计
-4. ：基于 DeepSeek 的多源股市信息智能分析平台 —— 系统集成与 Web 界面开发
-任务：搭建前后端系统，集成各模块功能，提供用户交互界面
-技术栈：Flask/Django + Vue/React、系统部署与测试
-
-
-## 整体功能/需求：
-
-### 系统集成与web界面开发
-
-1. 系统整体web页面用flask实现，DeepSeek部分通过接口调用交互
-2. 
-
-### 新闻与政策文本情感分析模块 （页面1）
-
-1. 通过对话的方式，粘贴文字的新闻和政策文本信息，发送到聊天中。系统通过接口调用DeepSeek，然后返回结果。
-
-### 技术指标与交易数据可视化模块（页面2）
-
-1. 通过在对话框中指定需要获取的交易数据，系统调用可视化模块进行数据可视化。通过akshare或者tushare进行获取。
-
-### 多源数据融合与决策建议生成模块 （页面3）
-
-如果：
-情感 = 正面
-且 RSI < 70
-且 价格 > MA5
-→ 建议：买入
-
-如果：
-情感 = 负面
-或 RSI > 70
-→ 建议：卖出
-
-否则：
-→ 观望
-
-
-## 整体功能增加：
-1. 新增定时任务模块，前端增加定时任务管理页面，支持设置任务频次和内容（任务内容预设）
-2. 预设自动获取新闻的任务
-
+## Overall Function Enhancement:
+1. A new scheduled task module has been added. A front-end page for managing scheduled tasks has been created, allowing for setting the frequency and content of the tasks (with preset task content).
+2. A preset task for automatically obtaining news has been added.
